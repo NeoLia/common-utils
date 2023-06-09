@@ -47,13 +47,15 @@ public class JdkHttpUtils {
             connection.connect();
             final int responseCode = connection.getResponseCode();
             if (HttpStatus.SC_OK > responseCode || HttpStatus.SC_IM_USED < responseCode) {
-                inputStream = connection.getInputStream();
-                if (inputStream != null) {
-                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                    String temp;
-                    while ((temp = bufferedReader.readLine()) != null) {
-                        result.append(temp);
-                    }
+                throw new IOException("异常响应码: " + responseCode);
+            }
+
+            inputStream = connection.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                String temp;
+                while ((temp = bufferedReader.readLine()) != null) {
+                    result.append(temp);
                 }
             }
         } finally {
@@ -107,13 +109,15 @@ public class JdkHttpUtils {
             connection.connect();
             final int responseCode = connection.getResponseCode();
             if (HttpStatus.SC_OK > responseCode || HttpStatus.SC_IM_USED < responseCode) {
-                inputStream = connection.getInputStream();
-                if (inputStream != null) {
-                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                    String temp;
-                    while ((temp = bufferedReader.readLine()) != null) {
-                        result.append(temp);
-                    }
+                throw new IOException("异常响应码: " + responseCode);
+            }
+
+            inputStream = connection.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                String temp;
+                while ((temp = bufferedReader.readLine()) != null) {
+                    result.append(temp);
                 }
             }
         } finally {
