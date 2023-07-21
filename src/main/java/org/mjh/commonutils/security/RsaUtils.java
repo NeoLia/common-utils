@@ -2,7 +2,6 @@ package org.mjh.commonutils.security;
 
 import org.apache.commons.codec.binary.Base64;
 
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
@@ -21,46 +20,46 @@ public class RsaUtils {
     private final static SignatureAlgorithmEnum SIGNATURE_ALGORITHM = SignatureAlgorithmEnum.SHA1_WITH_RSA;
 
     /**
-     * Base64编码私钥字符串转换为私钥对象
-     * @param privateKeyStr - Base64编码私钥字符串
+     * Base64编码的私钥字符串转换为私钥对象
+     * @param base64PrivateKeyStr - Base64编码的私钥字符串
      * @return PrivateKey - 返回私钥对象
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      * @author Neo Lia
      */
-    public static PrivateKey transformToPrivateKey(String privateKeyStr) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] buffer = Base64.decodeBase64(privateKeyStr);
+    public static PrivateKey transformToPrivateKeyFromBase64(String base64PrivateKeyStr) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] buffer = Base64.decodeBase64(base64PrivateKeyStr);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePrivate(keySpec);
     }
 
     /**
-     * Base64编码公钥字符串转换为私钥对象
-     * @param publicKeyStr - Base64编码公钥字符串
+     * Base64编码的公钥字符串转换为私钥对象
+     * @param base64PublicKeyStr - Base64编码的公钥字符串
      * @return PublicKey - 返回公钥对象
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      * @author Neo Lia
      */
-    public static PublicKey transformToPublicKey(String publicKeyStr) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] buffer = Base64.decodeBase64(publicKeyStr);
+    public static PublicKey transformToPublicKeyFromBase64(String base64PublicKeyStr) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] buffer = Base64.decodeBase64(base64PublicKeyStr);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePublic(keySpec);
     }
 
     /**
-     * 使用RSA生成Base64编码签名字符串（不补位）
+     * 私钥加密数据（不补位）
      * @param privateKey - 密钥
      * @param data - 签名数据
-     * @return String - Base64编码签名字符串（不补位）
+     * @return String - Base64编码的签名（不补位）
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeyException
      * @throws SignatureException
      * @author Neo Lia
      */
-    public static String sign(PrivateKey privateKey, String data) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    public static String signWithNoPaddingBase64(PrivateKey privateKey, String data) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM.getCode());
         signature.initSign(privateKey);
         signature.update(data.getBytes(StandardCharsets.UTF_8));
