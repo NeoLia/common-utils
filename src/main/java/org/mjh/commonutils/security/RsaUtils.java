@@ -35,7 +35,7 @@ public class RsaUtils {
     }
 
     /**
-     * Base64编码的公钥字符串转换为私钥对象
+     * Base64编码的公钥字符串转换为公钥对象
      * @param base64PublicKeyStr - Base64编码的公钥字符串
      * @return PublicKey - 返回公钥对象
      * @throws NoSuchAlgorithmException
